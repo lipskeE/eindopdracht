@@ -1,0 +1,206 @@
+﻿<Window x:Class="eind_opdracht.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:eind_opdracht"
+        mc:Ignorable="d"
+        Title="DMX controller" Height="450" Width="800">
+    <Viewbox Stretch="Uniform">
+        <Grid Width="800" Height="450">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="114*"/>
+                <RowDefinition Height="83*"/>
+            </Grid.RowDefinitions>
+
+            <Slider HorizontalAlignment="Left" x:Name="sl1"  Margin="-50,44,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" IsSnapToTickEnabled="True"  RenderTransformOrigin="0.5,0.5" ValueChanged="sl1_ValueChanged" Maximum="255" LargeChange="12.75" TickFrequency="12.75" SmallChange="12.75">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl2" Margin="40,44,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl2_ValueChanged" Maximum="255">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl3" Margin="130,44,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl3_ValueChanged" Maximum="255" SmallChange="1">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl4" Margin="220,44,0,0" Grid.Row="1" IsSnapToTickEnabled="True" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl4_ValueChanged" Maximum="200" LargeChange="10" TickFrequency="10" SmallChange="10">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl5" Margin="310,44,0,0" Grid.Row="1" VerticalAlignment="Top" IsSnapToTickEnabled="True" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl5_ValueChanged" Maximum="70" LargeChange="10" SmallChange="10" TickFrequency="10">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl6" Margin="400,44,0,0" Grid.Row="1" IsSnapToTickEnabled="True" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl6_ValueChanged" Maximum="63" IsDirectionReversed="True" SmallChange="9" Value="-1" LargeChange="9" TickFrequency="9">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl7" Margin="580,44,0,0" Grid.Row="1" IsSnapToTickEnabled="True" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl7_ValueChanged" Maximum="200" LargeChange="200" SmallChange="201" TickFrequency="201">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl8"  Margin="650,44,0,0" Grid.Row="1" IsSnapToTickEnabled="True" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl8_ValueChanged" Maximum="255" LargeChange="1" SmallChange="1">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90.865"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl9" Margin="490,45,0,0" Grid.Row="1" IsSnapToTickEnabled="True" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl9_ValueChanged" Maximum="100" LargeChange="100" SmallChange="201" TickFrequency="201">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl11" Margin="330,44,0,0" Grid.Row="1" VerticalAlignment="Top" IsSnapToTickEnabled="True" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl11_ValueChanged" Maximum="70" LargeChange="10" SmallChange="10" TickFrequency="10">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="sl12"  Margin="-30,44,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" IsSnapToTickEnabled="True"  RenderTransformOrigin="0.5,0.5" ValueChanged="sl12_ValueChanged" Maximum="255" LargeChange="12.75" TickFrequency="12.75" SmallChange="12.75">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+
+            <Slider HorizontalAlignment="Left" x:Name="sl13" Margin="60,44,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl13_ValueChanged" Maximum="255">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+
+            <Slider HorizontalAlignment="Left" x:Name="sl14" Margin="150,44,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" ValueChanged="sl14_ValueChanged" Maximum="255" SmallChange="1">
+                <Slider.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-90.00"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Slider.RenderTransform>
+            </Slider>
+            <Slider HorizontalAlignment="Left" x:Name="slidersp" Margin="450,91,0,0" Grid.Row="2" IsSnapToTickEnabled="True" VerticalAlignment="Top" Width="160" LargeChange="0.5" SmallChange="0.5" TickFrequency="0.5" ValueChanged="Slider_ValueChanged"/>
+
+            <Button Content="full" HorizontalAlignment="Left" x:Name="btn1" Margin="0,134,0,0" Grid.Row="1" VerticalAlignment="Top" Height="18" PreviewMouseLeftButtonDown="btn1_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="btn1_PreviewMouseLeftButtonUp" RenderTransformOrigin="-0.124,0.545" />
+            <Button Content="full" HorizontalAlignment="Left" x:Name="btn4" Margin="268,141,0,0" Grid.Row="1" VerticalAlignment="Top" Height="18" PreviewMouseLeftButtonDown="btn4_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="btn4_PreviewMouseLeftButtonUp" />
+            <Button Content="full" HorizontalAlignment="Left" x:Name="btn8" Margin="695,134,0,0" Grid.Row="1" VerticalAlignment="Top" Height="18" PreviewMouseLeftButtonDown="btn8_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="btn8_PreviewMouseLeftButtonUp"/>
+            <Button Content="white" HorizontalAlignment="Left" x:Name="btn5" Margin="360,137,0,0" Grid.Row="1" VerticalAlignment="Top" Height="18" PreviewMouseLeftButtonDown="btn5_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="btn5_PreviewMouseLeftButtonUp" RenderTransformOrigin="1.553,0.532"/>
+            <Button Content="wt-rd" HorizontalAlignment="Left" x:Name="wtrd" Margin="450,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" Grid.RowSpan="2" Click="wtrd_Click"/>
+            <Button Content="rd-or" HorizontalAlignment="Left" x:Name="rdor" Margin="490,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="0.025,-0.791" Grid.RowSpan="2" Click="rdor_Click"/>
+            <Button Content="or-lgr" HorizontalAlignment="Left" x:Name="orlgr" Margin="530,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" Grid.RowSpan="2" Click="orlgr_Click"/>
+            <Button Content="lgr-dgr" HorizontalAlignment="Left" x:Name="lgrdgr" Margin="570,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="-1.25,-1.875" Grid.RowSpan="2" Click="lgrdgr_Click"/>
+            <Button Content="dgr-bl" HorizontalAlignment="Left" x:Name="dgrbl" Margin="450,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="dgrbl_Click"/>
+            <Button Content="bl-re" HorizontalAlignment="Left" x:Name="blre" Margin="490,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="blre_Click"/>
+            <Button Content="re-lbl" HorizontalAlignment="Left" x:Name="relbl" Margin="530,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="relbl_Click"/>
+            <Button Content="geen" HorizontalAlignment="Left" x:Name="geen" Margin="570,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="geen_Click"/>
+            <Button Content="sound" HorizontalAlignment="Left" x:Name="auto" Margin="683,227,0,0" VerticalAlignment="Top" Height="86" Width="86" Click="Button_Click_1" RenderTransformOrigin="0.618,0.274" Grid.RowSpan="2" Grid.Row="1"/>
+            <Button Content="manual" HorizontalAlignment="Left" x:Name="manual" Margin="683,227,0,0" FontSize="9" VerticalAlignment="Top" Height="86" Width="86" Click="manuel" RenderTransformOrigin="0.618,0.274" Grid.Row="1" Grid.RowSpan="2"/>
+            <Button Content="dmx2 wijzigen?" HorizontalAlignment="Left" x:Name="dmx2" Margin="210,92,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button2"/>
+            <Button Content="dmx wijzigen?" HorizontalAlignment="Left" Margin="210,65,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click"/>
+
+            <Label Content="dim1" HorizontalAlignment="Left" Name="dimmer" FontSize="8" Margin="-7,7,0,0" VerticalAlignment="Top"/>
+            <Label Content="pan 0°" HorizontalAlignment="Left" x:Name="pan" FontSize="8" Margin="83,7,0,0" VerticalAlignment="Top"/>
+            <Label Content="tilt 0°" HorizontalAlignment="Left" x:Name="tilt" FontSize="8" Margin="173,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.95,0.524"/>
+            <Label Content="strobo" HorizontalAlignment="Left" x:Name="strobo" FontSize="8" Margin="262,0,0,0" VerticalAlignment="Center"/>
+            <Label Content="kleur" HorizontalAlignment="Left" x:Name="kleur" FontSize="8" Margin="357,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.862,0.368"/>
+            <Label Content="gobo" HorizontalAlignment="Left" x:Name="gobo" FontSize="8" Margin="450,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.401,-0.101"/>
+            <Label Content="auto pan uit" HorizontalAlignment="Left" x:Name="rotatie" FontSize="8" Margin="524,7,0,0" VerticalAlignment="Top"/>
+            <Label Content="speed" HorizontalAlignment="Left" x:Name="speedlbl" FontSize="8" VerticalAlignment="Top" Margin="695,7,0,0" RenderTransformOrigin="1.306,0.569"/>
+            <Label Content="kanaal in gebruik:" HorizontalAlignment="Left" x:Name="kanaalig" Margin="0,115,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Content="next:" HorizontalAlignment="Left" x:Name="next" Margin="360,21,0,0" FontSize="7" VerticalAlignment="Top" Height="24" Grid.RowSpan="2" RenderTransformOrigin="1.971,0.48"/>
+            <Label Content="auto kleur wissel" x:Name="autokleur" HorizontalAlignment="Left" Margin="450,195,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <Label Content="snelheid" x:Name="speedlb" HorizontalAlignment="Left" Margin="627,88,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Content="" HorizontalAlignment="Left" x:Name="dimmerlbl" FontSize="8" Margin="748,167,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label Content="auto tilt uit" HorizontalAlignment="Left" x:Name="autotililbl" FontSize="8" Margin="618,7,0,0" VerticalAlignment="Top"/>
+            <Label Content="kanaal2 in gebruik:" HorizontalAlignment="Left" x:Name="kanaalig2" Margin="0,140,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Content="start kanaal2:" HorizontalAlignment="Left" x:Name="startk" Margin="0,88,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Content="kleur" HorizontalAlignment="Left" x:Name="kleur1" FontSize="8" Margin="378,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.805,0.569"/>
+            <Label Content="next:" HorizontalAlignment="Left" x:Name="next1" Margin="379,21,0,0" FontSize="7" VerticalAlignment="Top" Height="24" Grid.RowSpan="2" RenderTransformOrigin="1.781,0.612"/>
+            <Label Content="dim2" HorizontalAlignment="Left" x:Name="dimmer2" FontSize="8" Margin="14,7,0,0" VerticalAlignment="Top"/>
+            <Label Content="start kanaal:" HorizontalAlignment="Left" Margin="0,62,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Content="pan2 0°" HorizontalAlignment="Left" x:Name="pan1" FontSize="8" Margin="101,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.723,0.39"/>
+            <Label Content="tilt2 0°" HorizontalAlignment="Left" x:Name="tilt1" FontSize="8" Margin="194,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.58,1.248"/>
+
+            <TextBox HorizontalAlignment="Left" Margin="78,68,0,0" Grid.Row="2" TextWrapping="Wrap" x:Name="dmxtextbox" MaxLength="3" PreviewTextInput="dmxtextbox_PreviewTextInput"  VerticalAlignment="Top" Width="120" TextChanged="dmxtextbox_TextChanged" RenderTransformOrigin="0.492,-0.101"/>
+            <TextBox HorizontalAlignment="Left" Margin="78,92,0,0" Grid.Row="2" TextWrapping="Wrap" x:Name="dmxtextbox1" MaxLength="3" PreviewTextInput="dmxtextbox_PreviewTextInput1"  VerticalAlignment="Top" Width="120" TextChanged="dmxtextbox_TextChanged1" RenderTransformOrigin="0.492,-0.101"/>
+
+            <CheckBox Content="split" x:Name="split" HorizontalAlignment="Left" Margin="360,160,0,0" Grid.Row="1" Checked="split_Checked" Unchecked="split_Unchecked" VerticalAlignment="Top"/>
+            <CheckBox Content="split" x:Name="split3" HorizontalAlignment="Left" Margin="179,160,0,0" Grid.Row="1" Checked="split3_Checked" Unchecked="split3_Unchecked" VerticalAlignment="Top"/>
+            <CheckBox Content="split" x:Name="split2" HorizontalAlignment="Left" Margin="89,160,0,0" Grid.Row="1" Checked="split2_Checked" Unchecked="split2_Unchecked" VerticalAlignment="Top"/>
+            <CheckBox Content="split" x:Name="split1" HorizontalAlignment="Left" Margin="0,160,0,0" Grid.Row="1" Checked="split1_Checked" Unchecked="split1_Unchecked" VerticalAlignment="Top"/>
+            <CheckBox Content="Tweede moving head?" HorizontalAlignment="Left" Margin="3,38,0,0" Grid.Row="2" Checked="CheckBox_Checked_1" Unchecked="CheckBox_Unchecked_1" VerticalAlignment="Top"/>
+
+            <ComboBox HorizontalAlignment="Left" Background="AliceBlue" Visibility="Visible" IsEnabled="True" x:Name="Port" SelectionChanged="Port_SelectionChanged"  Margin="3,208,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0,-2.094">
+                <ComboBoxItem IsSelected="True" Content="select com-poort"/>
+            </ComboBox>
+        </Grid>
+    </Viewbox>
+</Window>
+
