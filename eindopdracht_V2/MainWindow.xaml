@@ -152,19 +152,20 @@
             <Button Content="full" HorizontalAlignment="Left" x:Name="btn4" Margin="268,141,0,0" Grid.Row="1" VerticalAlignment="Top" Height="18" PreviewMouseLeftButtonDown="btn4_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="btn4_PreviewMouseLeftButtonUp" />
             <Button Content="full" HorizontalAlignment="Left" x:Name="btn8" Margin="695,134,0,0" Grid.Row="1" VerticalAlignment="Top" Height="18" PreviewMouseLeftButtonDown="btn8_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="btn8_PreviewMouseLeftButtonUp"/>
             <Button Content="white" HorizontalAlignment="Left" x:Name="btn5" Margin="360,137,0,0" Grid.Row="1" VerticalAlignment="Top" Height="18" PreviewMouseLeftButtonDown="btn5_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="btn5_PreviewMouseLeftButtonUp" RenderTransformOrigin="1.553,0.532"/>
-            <Button Content="wt-rd" HorizontalAlignment="Left" x:Name="wtrd" Margin="450,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" Grid.RowSpan="2" Click="wtrd_Click"/>
-            <Button Content="rd-or" HorizontalAlignment="Left" x:Name="rdor" Margin="490,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="0.025,-0.791" Grid.RowSpan="2" Click="rdor_Click"/>
-            <Button Content="or-lgr" HorizontalAlignment="Left" x:Name="orlgr" Margin="530,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" Grid.RowSpan="2" Click="orlgr_Click"/>
-            <Button Content="lgr-dgr" HorizontalAlignment="Left" x:Name="lgrdgr" Margin="570,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="-1.25,-1.875" Grid.RowSpan="2" Click="lgrdgr_Click"/>
-            <Button Content="dgr-bl" HorizontalAlignment="Left" x:Name="dgrbl" Margin="450,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="dgrbl_Click"/>
-            <Button Content="bl-re" HorizontalAlignment="Left" x:Name="blre" Margin="490,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="blre_Click"/>
-            <Button Content="re-lbl" HorizontalAlignment="Left" x:Name="relbl" Margin="530,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="relbl_Click"/>
+            <Button Content="wt-rd" HorizontalAlignment="Left" Background="Gray" x:Name="wtrd" Margin="450,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" Grid.RowSpan="2" Click="wtrd_Click"/>
+            <Button Content="rd-or" HorizontalAlignment="Left" Background="Gray" x:Name="rdor" Margin="490,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="0.025,-0.791" Grid.RowSpan="2" Click="rdor_Click"/>
+            <Button Content="or-lgr" HorizontalAlignment="Left" Background="Gray" x:Name="orlgr" Margin="530,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" Grid.RowSpan="2" Click="orlgr_Click"/>
+            <Button Content="lgr-dgr" HorizontalAlignment="Left" Background="Gray" x:Name="lgrdgr" Margin="570,221,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="-1.25,-1.875" Grid.RowSpan="2" Click="lgrdgr_Click"/>
+            <Button Content="dgr-bl" HorizontalAlignment="Left" Background="Gray" x:Name="dgrbl" Margin="450,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="dgrbl_Click"/>
+            <Button Content="bl-re" HorizontalAlignment="Left" Background="Gray" x:Name="blre" Margin="490,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="blre_Click"/>
+            <Button Content="re-lbl" HorizontalAlignment="Left" Background="Gray" x:Name="relbl" Margin="530,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="relbl_Click"/>
             <Button Content="geen" HorizontalAlignment="Left" x:Name="geen" Margin="570,38,0,0" Grid.Row="2" VerticalAlignment="Top" Height="40" Width="40" RenderTransformOrigin="2.083,-0.808" Click="geen_Click"/>
-            <Button Content="sound" HorizontalAlignment="Left" x:Name="auto" Margin="683,227,0,0" VerticalAlignment="Top" Height="86" Width="86" Click="Button_Click_1" RenderTransformOrigin="0.618,0.274" Grid.RowSpan="2" Grid.Row="1"/>
+            <Button Content="sound" HorizontalAlignment="Left"  x:Name="auto" Margin="683,227,0,0" VerticalAlignment="Top" Height="86" Width="86" Click="Button_Click_1" RenderTransformOrigin="0.618,0.274" Grid.RowSpan="2" Grid.Row="1"/>
             <Button Content="manual" HorizontalAlignment="Left" x:Name="manual" Margin="683,227,0,0" FontSize="9" VerticalAlignment="Top" Height="86" Width="86" Click="manuel" RenderTransformOrigin="0.618,0.274" Grid.Row="1" Grid.RowSpan="2"/>
             <Button Content="dmx2 wijzigen?" HorizontalAlignment="Left" x:Name="dmx2" Margin="210,92,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button2"/>
             <Button Content="dmx wijzigen?" HorizontalAlignment="Left" Margin="210,65,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click"/>
-
+            <Button Content="(re)load com-poorten" HorizontalAlignment="Left" Margin="131,209,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Button_Click_2"/>
+            
             <Label Content="dim1" HorizontalAlignment="Left" Name="dimmer" FontSize="8" Margin="-7,7,0,0" VerticalAlignment="Top"/>
             <Label Content="pan 0°" HorizontalAlignment="Left" x:Name="pan" FontSize="8" Margin="83,7,0,0" VerticalAlignment="Top"/>
             <Label Content="tilt 0°" HorizontalAlignment="Left" x:Name="tilt" FontSize="8" Margin="173,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.95,0.524"/>
@@ -176,7 +177,7 @@
             <Label Content="kanaal in gebruik:" HorizontalAlignment="Left" x:Name="kanaalig" Margin="0,115,0,0" Grid.Row="2" VerticalAlignment="Top"/>
             <Label Content="next:" HorizontalAlignment="Left" x:Name="next" Margin="360,21,0,0" FontSize="7" VerticalAlignment="Top" Height="24" Grid.RowSpan="2" RenderTransformOrigin="1.971,0.48"/>
             <Label Content="auto kleur wissel" x:Name="autokleur" HorizontalAlignment="Left" Margin="450,195,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-            <Label Content="snelheid" x:Name="speedlb" HorizontalAlignment="Left" Margin="627,88,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <Label Content="snelheid van de kleuren wissel" x:Name="speedlb" HorizontalAlignment="Left" Margin="450,115,0,0" Grid.Row="2" VerticalAlignment="Top" RenderTransformOrigin="-2.356,1.403"/>
             <Label Content="" HorizontalAlignment="Left" x:Name="dimmerlbl" FontSize="8" Margin="748,167,0,0" VerticalAlignment="Top" Grid.Row="1"/>
             <Label Content="auto tilt uit" HorizontalAlignment="Left" x:Name="autotililbl" FontSize="8" Margin="618,7,0,0" VerticalAlignment="Top"/>
             <Label Content="kanaal2 in gebruik:" HorizontalAlignment="Left" x:Name="kanaalig2" Margin="0,140,0,0" Grid.Row="2" VerticalAlignment="Top"/>
