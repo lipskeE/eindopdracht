@@ -24,7 +24,7 @@ namespace eind_opdracht
     public partial class MainWindow : Window
     {
         SerialPort _serialPort;
-        manuelclass oManuelclass = new manuelclass();
+        textd oManuelclass = new textd();
         byte[] _data;
         DispatcherTimer _dispatcherTimer;
         const int NUMBER_OF_DMX_BYTES = 513;
@@ -40,6 +40,8 @@ namespace eind_opdracht
             _dispatcherTimer.Tick += _dispatcherTimer_Tick;
             _dispatcherTimer.Start();
 
+            _cts = new CancellationTokenSource();
+            _serialPort = new SerialPort();
             manual.Visibility = Visibility.Hidden;
             slidersp.Value =0.5;
             slidersp.Minimum = 0.5;
@@ -105,7 +107,7 @@ namespace eind_opdracht
                     _serialPort.Close();
                 }
 
-                if (Port.SelectedItem.ToString() != "select com-poort")
+                if (Port.SelectedItem !=null)
                 {
                     try
                     {
@@ -828,7 +830,7 @@ namespace eind_opdracht
                 case 45:
                     gobo.Content = "propel spiraal";
                     break;
-                case 64:
+                case 54:
                     gobo.Content = "spiraal";
                     break;
                 case 63:

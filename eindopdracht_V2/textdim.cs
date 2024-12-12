@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace eindopdracht_V2
 {
-    internal class manuelclass:Window
+    internal class textd:Window
     {
 		private string text = "dim=100%";
 
