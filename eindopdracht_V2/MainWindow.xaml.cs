@@ -40,7 +40,7 @@ namespace eind_opdracht
             _dispatcherTimer.Tick += _dispatcherTimer_Tick;
             _dispatcherTimer.Start();
 
-            _cts = new CancellationTokenSource();
+            _cts = new CancellationTokenSource(); 
             _serialPort = new SerialPort();
             manual.Visibility = Visibility.Hidden;
             slidersp.Value =0.5;
@@ -65,10 +65,9 @@ namespace eind_opdracht
             var margin = kanaalig.Margin;
             kanaalig.Margin = new Thickness(margin.Left, margin.Top - 26, margin.Right, margin.Bottom);
         }
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_Click_2(object sender, RoutedEventArgs e) //Zorgt er voor dat de poort opnieuw kan geladen worden zonder het programma te sluiten
         {
             Port.Items.Clear();
-            _cts = new CancellationTokenSource();
             foreach (string s in SerialPort.GetPortNames())
                 Port.Items.Add(s);
 
@@ -135,7 +134,7 @@ namespace eind_opdracht
         }
         private void dmxtextbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (int.TryParse(dmxtextbox.Text, out int value))
+            if (int.TryParse(dmxtextbox.Text, out int value)) //waneer er een getal groter dan 512 wordt ingetypt komt er een fout.
             {
                 if (value > 512)
                 {
@@ -144,12 +143,12 @@ namespace eind_opdracht
                     dmxtextbox.SelectionStart = dmxtextbox.Text.Length;
                 }
             }
-            else if (!string.IsNullOrEmpty(dmxtextbox.Text))
+            else if (!string.IsNullOrEmpty(dmxtextbox.Text)) //zet de textbox terug op leeg
             {
                 dmxtextbox.Text = "";
             }
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) //waneer er een moving head wordt gebruikt dan zal hij de value's pakken van de sliders die al waren ingesteld
         {
             if (int.TryParse(dmxtextbox.Text, out int newAddress))
                 kanaal = newAddress;
@@ -172,7 +171,7 @@ namespace eind_opdracht
         {
             return Regex.IsMatch(text, "^[0-9]+$"); //zorgt er voor dat je alleen nummers kan invoeren
         }
-        private void dmxtextbox_TextChanged1(object sender, TextChangedEventArgs e)
+        private void dmxtextbox_TextChanged1(object sender, TextChangedEventArgs e) //heeft een waarschuwing dat de textbox max tot 512 kan dit is voor de tweede textbox.
         {
             if (int.TryParse(dmxtextbox1.Text, out int value))
             {
@@ -183,7 +182,7 @@ namespace eind_opdracht
                     dmxtextbox1.SelectionStart = dmxtextbox1.Text.Length;
                 }
             }
-            else if (!string.IsNullOrEmpty(dmxtextbox1.Text))
+            else if (!string.IsNullOrEmpty(dmxtextbox1.Text)) //zet de textbox terug op leeg
             {
                 dmxtextbox1.Text = "";
             }
@@ -297,7 +296,7 @@ namespace eind_opdracht
 
             if (sl2 != null)
             {
-                var margin = sl2.Margin;
+                var margin = sl2.Margin; //zorgt er voor dat alles terug gaat naar hun origineel
                 var margin2 = pan.Margin;
                 sl2.Margin = new Thickness(margin.Left + 17.5, margin.Top, margin.Right + 17.5, margin.Bottom);
                 pan.Margin = new Thickness(margin2.Left + 17.5, margin2.Top, margin2.Right + 17.5, margin2.Bottom);
@@ -327,14 +326,13 @@ namespace eind_opdracht
 
             if (sl13.Visibility == Visibility.Visible)
             {
-                _data[kanaal2 + 0] = Convert.ToByte(sl13.Value);
+                _data[kanaal2 + 0] = Convert.ToByte(sl13.Value); //als SL13 visible is dan is kanaal2 +0 =sl13.value
             }
             else
             {
-                _data[kanaal2 + 0] = Convert.ToByte(sl2.Value);
+                _data[kanaal2 + 0] = Convert.ToByte(sl2.Value); //als SL13 niet visible is dan is kanaal2 +0 =sl2.value
                 sl13.Value=sl2.Value;
             }
-            
         }
         
         //TITLT---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -359,7 +357,7 @@ namespace eind_opdracht
             sl14.Visibility = Visibility.Visible;
             tilt1.Visibility = Visibility.Visible;
 
-            if (sl3 != null)
+            if (sl3 != null) //zorgt er voor dat de slider wordt verplaatst om plaats te maken voor de tweede slider
             {
                 var margin = sl3.Margin;
                 var margin1 = tilt.Margin;
@@ -375,7 +373,7 @@ namespace eind_opdracht
 
             if (sl3 != null)
             {
-                var margin = sl3.Margin;
+                var margin = sl3.Margin; //zorgt er voor dat alles terug gaat naar hun origineel
                 var margin1= tilt.Margin;
                 sl3.Margin= new Thickness(margin.Left + 17.5, margin.Top, margin.Right + 17.5, margin.Bottom);
                 tilt.Margin = new Thickness(margin1.Left + 17.5, margin1.Top, margin1.Right + 17.5, margin1.Bottom);
@@ -404,7 +402,7 @@ namespace eind_opdracht
             _data[kanaal + 6] = Convert.ToByte(sl4.Value);
             _data[kanaal2 + 6] = Convert.ToByte(sl4.Value);
         }
-        private void btn4_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void btn4_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) //alleen als slider 4=0 dan kan de full strobo maar werken
         {
             if (sl4.Value == 0)
             {
@@ -413,7 +411,7 @@ namespace eind_opdracht
                 strobo.Content = "strobo=100%";
             }
         }
-        private void btn4_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btn4_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) //zet de strobo terug naar 0
         {
             if (_data[kanaal + 6] == 200)
             {
@@ -423,7 +421,7 @@ namespace eind_opdracht
             }
         }
         //KLEUR---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        private void sl5_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void sl5_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //zet de value van slider 5 om in bytes voor kanaal +4
         {
             switch (sl5.Value)
             {
@@ -470,7 +468,7 @@ namespace eind_opdracht
                 _data[kanaal2 + 4] = Convert.ToByte(sl5.Value);
             }
         }
-        private void split_Checked(object sender, RoutedEventArgs e)
+        private void split_Checked(object sender, RoutedEventArgs e) //zorgt er voor dat de slider wordt verplaatst om plaats te maken voor de tweede slider
         {
             if (sl5 != null)
             {
@@ -483,10 +481,11 @@ namespace eind_opdracht
                 sl11.Visibility = Visibility.Visible;
                 kleur1.Visibility = Visibility.Visible;
                 next1.Visibility = Visibility.Visible;
+                sl11.Value = sl5.Value;
             }
             _data[kanaal2 + 4] = Convert.ToByte(sl11.Value);
         }
-        private void split_Unchecked(object sender, RoutedEventArgs e)
+        private void split_Unchecked(object sender, RoutedEventArgs e) //zorgt er voor dat de slider terug naar hun originele positie worden gezet.
         {
             if (sl5 != null)
             {
@@ -503,7 +502,7 @@ namespace eind_opdracht
                 _data[kanaal2 + 4] = Convert.ToByte(sl11.Value);
             }
         }
-        private void sl11_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void sl11_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //als slider 11 visible is gebruikt kanaal2+4 slider 11 anders gebruikt hij slider 5
         {
             if (sl11.Visibility == Visibility.Visible)
             {
@@ -550,7 +549,7 @@ namespace eind_opdracht
                     break;
             }
         }
-        private void btn5_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void btn5_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) //zet alle lampen op wit zo lang de knop is ingeduwt
         {
             _data[kanaal + 4] = Convert.ToByte(0);
             _data[kanaal2 + 4] = Convert.ToByte(0);
@@ -560,7 +559,7 @@ namespace eind_opdracht
             kleur1.Content = "wit";
         }
         
-        private void btn5_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btn5_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) //zet alle lampen terug naar de juiste sliders
         {
            sl5.IsEnabled = true;
            sl11.IsEnabled = true;
@@ -568,235 +567,243 @@ namespace eind_opdracht
            _data[kanaal2 + 4] = Convert.ToByte(sl11.Value);
         }
 
-        private CancellationTokenSource _cts;
-        private bool _isRunning = false;
+        private CancellationTokenSource _cts; // Wordt gebruikt om asynchrone operaties te annuleren
+        private bool _isRunning = false;     // Houdt bij of een proces momenteel actief is
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private async void wtrd_Click(object sender, RoutedEventArgs e)
         {
-            sl5.IsEnabled = false;
+            sl5.IsEnabled = false; // Schakel sliders en knoppen uit om manuele aanpassingen te voorkomen
             sl11.IsEnabled = false;
             btn5.IsEnabled = false;
-            _cts?.Cancel();
-            if (_isRunning) return; 
+            _cts?.Cancel(); // Annuleer een bestaande taak, indien actief
+            if (_isRunning) return;  // Zorg ervoor dat geen meerdere taken tegelijk draaien
             _isRunning = true;
-            _cts = new CancellationTokenSource();
+            _cts = new CancellationTokenSource(); // Nieuw annuleertoken maken
 
             try
             {
                 while (!_cts.Token.IsCancellationRequested) //wisselt tussen wit en rood
                 {
-                    double wacht = slidersp.Value; 
-                    _data[kanaal + 4] = 00;
-                    _data[kanaal2 + 4] = 10;
-                    wtrd.Background=new SolidColorBrush(Colors.White);
-                    await Task.Delay((int)(wacht * 1000));
+                    double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
+                    _data[kanaal + 4] = 00; //zet kanaal +4 op wit
+                    _data[kanaal2 + 4] = 10; //zet kaanaal2 +4 op rood
+                    wtrd.Background=new SolidColorBrush(Colors.White); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
-                    if (_cts.Token.IsCancellationRequested) break;
+                    if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
-                    _data[kanaal + 4] = 10;
-                    _data[kanaal2 + 4] = 00;
-                    wtrd.Background = new SolidColorBrush(Colors.Red);
-                    await Task.Delay((int)(wacht * 1000));
+                    _data[kanaal + 4] = 10; //zet kanaal +4 op rood
+                    _data[kanaal2 + 4] = 00; //zet kanaal2 +4 op wit
+                    wtrd.Background = new SolidColorBrush(Colors.Red); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
             catch (OperationCanceledException) { }
-            finally { _isRunning = false; }
-            wtrd.Background = new SolidColorBrush(Colors.Gray);
+            finally { _isRunning = false; } // Zet running status naar false na voltooiing
+            wtrd.Background = new SolidColorBrush(Colors.Gray); // Achtergrondkleur aanpassen naar grijs
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private async void rdor_Click(object sender, RoutedEventArgs e) 
         {
-            sl5.IsEnabled = false;
+            sl5.IsEnabled = false; // Schakel sliders en knoppen uit om manuele aanpassingen te voorkomen
             sl11.IsEnabled = false;
             btn5.IsEnabled = false;
-            _cts?.Cancel();
+            _cts?.Cancel(); // Annuleer een bestaande taak, indien actief
             if (_isRunning) return; 
             _isRunning = true;
-            _cts = new CancellationTokenSource();
+            _cts = new CancellationTokenSource(); // Nieuw annuleertoken maken
 
             try
             {
                 while (!_cts.Token.IsCancellationRequested) //wisselt tussen rood en oranje
                 {
-                    double wacht = slidersp.Value; 
-                    _data[kanaal + 4] = 10;
-                    _data[kanaal2 + 4] = 20;
-                    rdor.Background = new SolidColorBrush(Colors.Red);
-                    await Task.Delay((int)(wacht * 1000));
+                    double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
+                    _data[kanaal + 4] = 10; //zet kanaal2 +4 op rood
+                    _data[kanaal2 + 4] = 20; //zet kanaal2 +4 op oranje
+                    rdor.Background = new SolidColorBrush(Colors.Red); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
-                    if (_cts.Token.IsCancellationRequested) break;
+                    if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
-                    _data[kanaal + 4] = 20;
-                    _data[kanaal2 + 4] = 10;
-                    rdor.Background= new SolidColorBrush(Colors.Orange);
-                    await Task.Delay((int)(wacht * 1000));
+                    _data[kanaal + 4] = 20; //zet kanaal +4 op oranje
+                    _data[kanaal2 + 4] = 10; //zet kanaal2 +4 op rood
+                    rdor.Background= new SolidColorBrush(Colors.Orange); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
             catch (OperationCanceledException) { }
-            finally { _isRunning = false; }
-            rdor.Background = new SolidColorBrush(Colors.Gray);
+            finally { _isRunning = false; } // Zet running status naar false na voltooiing
+            rdor.Background = new SolidColorBrush(Colors.Gray); // Achtergrondkleur aanpassen naar grijs
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private async void orlgr_Click(object sender, RoutedEventArgs e)
         {
-            sl5.IsEnabled = false;
+            sl5.IsEnabled = false; // Schakel sliders en knoppen uit om manuele aanpassingen te voorkomen
             btn5.IsEnabled = false;
             sl11.IsEnabled = false;
-            _cts?.Cancel();
-            if (_isRunning) return; 
+            _cts?.Cancel(); // Annuleer een bestaande taak, indien actief
+            if (_isRunning) return; // Zorg ervoor dat geen meerdere taken tegelijk draaien
             _isRunning = true;
-            _cts = new CancellationTokenSource();
+            _cts = new CancellationTokenSource(); // Nieuw annuleertoken maken
 
             try
             {
                 while (!_cts.Token.IsCancellationRequested) //wisselt tussen oranjeen lichtgroen
                 {
-                    double wacht = slidersp.Value; 
-                    _data[kanaal + 4] = 20;
-                    _data[kanaal2 + 4] = 30;
-                    orlgr.Background=new SolidColorBrush(Colors.Orange);
-                    await Task.Delay((int)(wacht * 1000));
+                    double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
+                    _data[kanaal + 4] = 20; //zet kanaal +4 op oranje
+                    _data[kanaal2 + 4] = 30; //zet kanaal2 +4 op lichtgroen
+                    orlgr.Background=new SolidColorBrush(Colors.Orange); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
-                    if (_cts.Token.IsCancellationRequested) break;
+                    if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
-                    _data[kanaal + 4] = 30;
-                    _data[kanaal2 + 4] = 20;
-                    orlgr.Background=new SolidColorBrush(Colors.LightGreen);
-                    await Task.Delay((int)(wacht * 1000));
+                    _data[kanaal + 4] = 30; //zet kanaal +4 op lichtgroen
+                    _data[kanaal2 + 4] = 20; //zet kanaal2 +4 op oranje
+                    orlgr.Background=new SolidColorBrush(Colors.LightGreen); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
             catch (OperationCanceledException) { }
-            finally { _isRunning = false; }
-            orlgr.Background = new SolidColorBrush(Colors.Gray);
+            finally { _isRunning = false; } // Zet running status naar false na voltooiing
+            orlgr.Background = new SolidColorBrush(Colors.Gray); // Achtergrondkleur aanpassen naar grijs
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private async void lgrdgr_Click(object sender, RoutedEventArgs e)
         {
-            sl5.IsEnabled = false;
+            sl5.IsEnabled = false; // Schakel sliders en knoppen uit om manuele aanpassingen te voorkomen
             btn5.IsEnabled = false;
             sl11.IsEnabled = false;
-            _cts?.Cancel();
-            if (_isRunning) return; 
+            _cts?.Cancel(); // Annuleer een bestaande taak, indien actief
+            if (_isRunning) return; // Zorg ervoor dat geen meerdere taken tegelijk draaien
             _isRunning = true;
-            _cts = new CancellationTokenSource();
+            _cts = new CancellationTokenSource(); // Nieuw annuleertoken maken
 
             try
             {
                 while (!_cts.Token.IsCancellationRequested) //wislet tussen lichtgroen en donkergroen
                 {
-                    double wacht = slidersp.Value; 
-                    _data[kanaal + 4] = 30;
-                    _data[kanaal2 + 4] = 40;
-                    await Task.Delay((int)(wacht * 1000));
-                    lgrdgr.Background=new SolidColorBrush(Colors.LightGreen);
-                    if (_cts.Token.IsCancellationRequested) break;
+                    double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
+                    _data[kanaal + 4] = 30; //zet kanaal +4 op lichtgroen
+                    _data[kanaal2 + 4] = 40; //zet kanaal2 +4 op donkergroen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
+                    lgrdgr.Background=new SolidColorBrush(Colors.LightGreen); // Achtergrondkleur aanpassen
 
-                    _data[kanaal + 4] = 40;
-                    _data[kanaal2 + 4] = 30;
-                    lgrdgr.Background=new SolidColorBrush(Colors.DarkGreen);
-                    await Task.Delay((int)(wacht * 1000));
+                    if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
+
+                    _data[kanaal + 4] = 40; //zet kanaal +4 op donkergroen
+                    _data[kanaal2 + 4] = 30; //zet kanaal2 +4 op lichtgroen
+                    lgrdgr.Background=new SolidColorBrush(Colors.DarkGreen); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
             catch (OperationCanceledException) { }
-            finally { _isRunning = false; }
-            lgrdgr.Background = new SolidColorBrush(Colors.Gray);
+            finally { _isRunning = false; } // Zet running status naar false na voltooiing
+            lgrdgr.Background = new SolidColorBrush(Colors.Gray); // Achtergrondkleur aanpassen naar grijs
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private async void dgrbl_Click(object sender, RoutedEventArgs e)
         {
-            
-            sl5.IsEnabled = false;
+            sl5.IsEnabled = false; // Schakel sliders en knoppen uit om manuele aanpassingen te voorkomen
             btn5.IsEnabled = false;
             sl11.IsEnabled = false;
-            _cts?.Cancel();
-            if (_isRunning) return; 
+            _cts?.Cancel(); // Annuleer een bestaande taak, indien actief
+            if (_isRunning) return; // Zorg ervoor dat geen meerdere taken tegelijk draaien
             _isRunning = true;
-            _cts = new CancellationTokenSource();
+            _cts = new CancellationTokenSource(); // Nieuw annuleertoken maken
 
             try
             {
                 while (!_cts.Token.IsCancellationRequested) //wiselt tussen donker groen en blauw.
                 {
-                    double wacht = slidersp.Value; 
-                    _data[kanaal + 4] = 40;
-                    _data[kanaal2 + 4] = 50;
-                    dgrbl.Background=new SolidColorBrush(Colors.DarkGreen);
-                    await Task.Delay((int)(wacht * 1000));
+                    double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
+                    _data[kanaal + 4] = 40; //zet kanaal +4 op donkergroen
+                    _data[kanaal2 + 4] = 50; //zet kanaal2 +4 op blauw
+                    dgrbl.Background=new SolidColorBrush(Colors.DarkGreen); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
-                    if (_cts.Token.IsCancellationRequested) break;
+                    if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
-                    _data[kanaal + 4] = 50;
-                    _data[kanaal2 + 4] = 40;
-                    dgrbl.Background = new SolidColorBrush(Colors.Blue);
-                    await Task.Delay((int)(wacht * 1000));
+                    _data[kanaal + 4] = 50; //zet kanaal +4 op blauw
+                    _data[kanaal2 + 4] = 40; //zet kanaal2 +4 op donkergroen
+                    dgrbl.Background = new SolidColorBrush(Colors.Blue); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
             catch (OperationCanceledException) { }
-            finally { _isRunning = false; }
-            dgrbl.Background = new SolidColorBrush(Colors.Gray);
+            finally { _isRunning = false; } // Zet running status naar false na voltooiing
+            dgrbl.Background = new SolidColorBrush(Colors.Gray); // Achtergrondkleur aanpassen naar grijs
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private async void blre_Click(object sender, RoutedEventArgs e)
         {
-            sl5.IsEnabled = false;
+            sl5.IsEnabled = false; // Schakel sliders en knoppen uit om manuele aanpassingen te voorkomen
             btn5.IsEnabled = false;
             sl11.IsEnabled = false;
-            _cts?.Cancel();
-            if (_isRunning) return; 
+            _cts?.Cancel(); // Annuleer een bestaande taak, indien actief
+            if (_isRunning) return; // Zorg ervoor dat geen meerdere taken tegelijk draaien
             _isRunning = true;
-            _cts = new CancellationTokenSource();
+            _cts = new CancellationTokenSource(); // Nieuw annuleertoken maken
 
             try
             {
                 while (!_cts.Token.IsCancellationRequested) //wiselt tussen blauw en roze
                 {
-                    double wacht = slidersp.Value; 
-                    _data[kanaal + 4] = 50;
-                    _data[kanaal2 + 4] = 60;
-                    blre.Background=new SolidColorBrush(Colors.Blue);
-                    await Task.Delay((int)(wacht * 1000));
+                    double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
+                    _data[kanaal + 4] = 50; //zet kanaal +4 op blauw
+                    _data[kanaal2 + 4] = 60; //zet kanaal2 +4 op roze
+                    blre.Background=new SolidColorBrush(Colors.Blue); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
-                    if (_cts.Token.IsCancellationRequested) break;
+                    if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
-                    _data[kanaal + 4] = 60;
-                    _data[kanaal2 + 4] = 50;
-                    blre.Background = new SolidColorBrush(Colors.Pink);
-                    await Task.Delay((int)(wacht * 1000));
+                    _data[kanaal + 4] = 60; //zet kanaal +4 op roze
+                    _data[kanaal2 + 4] = 50; //zet kanaal2 +4 op blauw
+                    blre.Background = new SolidColorBrush(Colors.Pink); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
             catch (OperationCanceledException) { }
-            finally { _isRunning = false; }
-            blre.Background = new SolidColorBrush(Colors.Gray);
+            finally { _isRunning = false; } // Zet running status naar false na voltooiing
+            blre.Background = new SolidColorBrush(Colors.Gray); // Achtergrondkleur aanpassen naar grijs
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private async void relbl_Click(object sender, RoutedEventArgs e)
         {
-            sl5.IsEnabled = false;
+            sl5.IsEnabled = false; // Schakel sliders en knoppen uit om manuele aanpassingen te voorkomen
             btn5.IsEnabled = false;
             sl11.IsEnabled = false;
-            _cts?.Cancel();
-            if (_isRunning) return; 
+            _cts?.Cancel(); // Annuleer een bestaande taak, indien actief
+            if (_isRunning) return; // Zorg ervoor dat geen meerdere taken tegelijk draaien
             _isRunning = true;
-            _cts = new CancellationTokenSource();
+            _cts = new CancellationTokenSource(); // Nieuw annuleertoken maken
 
             try
             {
                 while (!_cts.Token.IsCancellationRequested) //wiselt tussen roze en licht blauw.
                 {
-                    double wacht = slidersp.Value;
-                    _data[kanaal + 4] = 60;
-                    _data[kanaal2 + 4] = 70;
-                    relbl.Background= new SolidColorBrush(Colors.Pink);
-                    await Task.Delay((int)(wacht * 1000));
+                    double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
+                    _data[kanaal + 4] = 60; //zet kanaal +4 op roze
+                    _data[kanaal2 + 4] = 70; //zet kanaal2 +4 op lichtblauw
+                    relbl.Background= new SolidColorBrush(Colors.Pink); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
-                    if (_cts.Token.IsCancellationRequested) break;
+                    if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
-                    _data[kanaal + 4] = 70;
-                    _data[kanaal2 + 4] = 60;
-                    relbl.Background=new SolidColorBrush(Colors.LightBlue);
-                    await Task.Delay((int)(wacht * 1000));
+                    _data[kanaal + 4] = 70; //zet kanaal +4 op lichtblauw
+                    _data[kanaal2 + 4] = 60; //zet kanaal2 +4 op roze
+                    relbl.Background=new SolidColorBrush(Colors.LightBlue); // Achtergrondkleur aanpassen
+                    await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
             catch (OperationCanceledException) { }
-            finally { _isRunning = false; }
-            relbl.Background = new SolidColorBrush(Colors.Gray);
+            finally { _isRunning = false; } // Zet running status naar false na voltooiing
+            relbl.Background = new SolidColorBrush(Colors.Gray); // Achtergrondkleur aanpassen naar grijs
         }
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private void geen_Click(object sender, RoutedEventArgs e) //stopt alle automatische kleuren wisseling.
         {
-            _cts?.Cancel();
+            _cts?.Cancel(); // canecelt de cts token en enabeled terug de sliders. en zet deze sliders terug op hun bestaande value's
             sl5.IsEnabled = true;
             btn5.IsEnabled = true;
             sl11.IsEnabled = true;
@@ -808,7 +815,7 @@ namespace eind_opdracht
             speedlb.Content = "snelheid: " + slidersp.Value + "sec";
         }
         //GOBO---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        private void sl6_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void sl6_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //zet de value van sl6 om in bytes vooor kanaal +5
         {
             switch (sl6.Value) //zet sl6.value om in leesbare tekst.
             {
@@ -853,13 +860,13 @@ namespace eind_opdracht
                 sl3.IsEnabled = true;
                 if (sl9.Value == 100)
                 {
-                    _data[kanaal + 10] = Convert.ToByte(201);
+                    _data[kanaal + 10] = Convert.ToByte(201); //als slider9.value=100 dan zet hij kanaal +10 op 201. Dit zorgt ervoor dat hij automatische tlit en pan gebrukt
                     _data[kanaal2 + 10] = Convert.ToByte(201);
                 }
             }
             else
             {
-                autotililbl.Content = "auto tilt uit";
+                autotililbl.Content = "auto tilt uit"; //als auto tilt uit wordt gedaan. dan zal sl3 terug enabeled worden. en kanaal +0 gaa terug naar de value's van de sliders
                 sl3.IsEnabled = true;
                 _data[kanaal + 0] = Convert.ToByte(sl2.Value);
                 _data[kanaal2 + 0] = Convert.ToByte(sl2.Value);
@@ -867,12 +874,12 @@ namespace eind_opdracht
         }
 
         //AUTO PAN---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        private void sl9_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //zet auto pan aan.
+        private void sl9_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //zet de value van slider 9 om in bytes voor kanaal +10
         {
             _data[kanaal + 10] = Convert.ToByte(sl9.Value);
             _data[kanaal2 + 10] = Convert.ToByte(sl9.Value);
 
-            if (sl9.Value == 100)
+            if (sl9.Value == 100) //als sl9.value=100 dan gaat hij automatishe pan doen
             {
                 sl2.IsEnabled = false;
                 sl13.IsEnabled = false;
@@ -882,13 +889,13 @@ namespace eind_opdracht
                 _data[kanaal + 2] = Convert.ToByte(sl3.Value);
                 _data[kanaal2 + 2] = Convert.ToByte(sl14.Value);
 
-                if (sl7.Value == 200)
+                if (sl7.Value == 200) //als slider7.value=200 dan zet hij kanaal +10 op 201. Dit zorgt ervoor dat hij automatische tlit en pan gebrukt
                 {
                     _data[kanaal + 10] = Convert.ToByte(201);
                     _data[kanaal2 + 10] = Convert.ToByte(201);
                 }
             }
-            else
+            else //als auto pan uit wordt gedaan. dan zal sl3 terug enabeled worden. en kanaal +2 gaa terug naar de value's van de sliders
             {
                 sl2.IsEnabled = true;
                 sl13.IsEnabled = true;
@@ -897,13 +904,13 @@ namespace eind_opdracht
                 _data[kanaal2 + 2] = Convert.ToByte(sl3.Value);
 
 
-                if (sl7.Value == 200)
+                if (sl7.Value == 200) //als slider7.value=200 dan zet hij kanaal +10 terug op de warrden van de juiste slider
                 {
                     _data[kanaal + 10] = Convert.ToByte(sl7.Value);
                     _data[kanaal2 + 10] = Convert.ToByte(sl7.Value);
                 }
             }
-            if (sl9.Value == 0)
+            if (sl9.Value == 0) //als slider9.value=0 dan zet hij kanaal +0 terug op de warrden van de juiste slider
             {
                 _data[kanaal + 0] = Convert.ToByte(sl2.Value);
                 _data[kanaal2 + 0] = Convert.ToByte(sl13.Value);
@@ -942,7 +949,7 @@ namespace eind_opdracht
             split2.IsEnabled = false;
             split3.IsEnabled = false;
         }
-        private void sl8_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void sl8_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //zet de value van slider 8 om naar bytes voor kanaal9
         {
             _data[kanaal + 8] = Convert.ToByte( sl8.Value);
             _data[kanaal2 + 8] = Convert.ToByte(sl8.Value);
