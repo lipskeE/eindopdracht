@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:eind_opdracht"
         mc:Ignorable="d"
-        Title="DMX controller" Height="450" Width="800">
+        Title="DMX controller"
+        Closed="Window_Closed"
+        Height="450" Width="800">
+    
     <Viewbox Stretch="Uniform">
         <Grid Width="800" Height="450">
             <Grid.RowDefinitions>
@@ -201,6 +204,7 @@
             <ComboBox HorizontalAlignment="Left" Background="AliceBlue" Visibility="Visible" IsEnabled="True" x:Name="Port" SelectionChanged="Port_SelectionChanged"  Margin="3,208,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0,-2.094">
                 <ComboBoxItem IsSelected="True" Content="select com-poort"/>
             </ComboBox>
+            <TextBlock x:Name="tijd" HorizontalAlignment="Left" Margin="720,140,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
         </Grid>
     </Viewbox>
 </Window>

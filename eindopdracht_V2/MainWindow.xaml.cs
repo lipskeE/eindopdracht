@@ -1,19 +1,15 @@
 ﻿using System.Text;
+using System; 
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.IO;
 using eindopdracht_V2;
+using System.Timers;
+
 
 
 namespace eind_opdracht
@@ -24,12 +20,13 @@ namespace eind_opdracht
     public partial class MainWindow : Window
     {
         SerialPort _serialPort;
-        textd oManuelclass = new textd();
+        TEXTD oManuelclass = new TEXTD();
         byte[] _data;
         DispatcherTimer _dispatcherTimer;
         const int NUMBER_OF_DMX_BYTES = 513;
         int kanaal;
         int kanaal2;
+        DispatcherTimer timer;
 
         public MainWindow()
         {
@@ -39,11 +36,11 @@ namespace eind_opdracht
             _dispatcherTimer.Interval = TimeSpan.FromSeconds(0.025);
             _dispatcherTimer.Tick += _dispatcherTimer_Tick;
             _dispatcherTimer.Start();
-
-            _cts = new CancellationTokenSource(); 
+            timer = new DispatcherTimer();
+            _cts = new CancellationTokenSource();
             _serialPort = new SerialPort();
             manual.Visibility = Visibility.Hidden;
-            slidersp.Value =0.5;
+            slidersp.Value = 0.5;
             slidersp.Minimum = 0.5;
             sl11.Visibility = Visibility.Hidden;
             kleur1.Visibility = Visibility.Hidden;
@@ -62,6 +59,7 @@ namespace eind_opdracht
             split2.Visibility = Visibility.Hidden;
             split3.Visibility = Visibility.Hidden;
             split.Visibility = Visibility.Hidden;
+            Clock();
             var margin = kanaalig.Margin;
             kanaalig.Margin = new Thickness(margin.Left, margin.Top - 26, margin.Right, margin.Bottom);
         }
@@ -92,10 +90,11 @@ namespace eind_opdracht
                 serialPort.Write(data, 0, data.Length);
             }
         }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
-            SendDmxData(new byte[NUMBER_OF_DMX_BYTES], _serialPort);
-            _serialPort.Dispose();
+            SendDmxData(new byte[NUMBER_OF_DMX_BYTES], _serialPort); //zet de dmx bytes op nul
+            _serialPort.Dispose(); //sluit de serial poor af
+            Environment.Exit(0); //zorgt er voor dat het programma zeker sluit
         }
         private void Port_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -106,7 +105,7 @@ namespace eind_opdracht
                     _serialPort.Close();
                 }
 
-                if (Port.SelectedItem !=null)
+                if (Port.SelectedItem != null)
                 {
                     try
                     {
@@ -200,7 +199,7 @@ namespace eind_opdracht
             _data[kanaal2 + 7] = _data[kanaal + 7];
             _data[kanaal2 + 8] = _data[kanaal + 8];
             _data[kanaal2 + 9] = _data[kanaal + 9];
-            _data[kanaal2 +10] = _data[kanaal + 10];
+            _data[kanaal2 + 10] = _data[kanaal + 10];
         }
         //DIMMEN---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private void sl1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -216,21 +215,21 @@ namespace eind_opdracht
             else
             {
                 _data[kanaal2 + 7] = Convert.ToByte(sl1.Value); //zorgt waneeer split wordt uitgeschakeld dat hij terug de eerst slider volgt en dat hij sl12 in de achtergrond aanpast
-                sl12.Value=sl1.Value;
+                sl12.Value = sl1.Value;
             }
         }
         private void btn1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _data[kanaal + 7] = Convert.ToByte(255); //wanneer full wordt ingeduwt gaat kanaal+7 en kaanaal2+7 op 255 staan. Dus full.
-            _data[kanaal2 + 7] = Convert.ToByte(255); 
+            _data[kanaal2 + 7] = Convert.ToByte(255);
             dimmer.Content = oManuelclass.Text;
-            dimmer2.Content= oManuelclass.Text;
+            dimmer2.Content = oManuelclass.Text;
         }
         private void btn1_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _data[kanaal + 7] = Convert.ToByte(sl1.Value); //wanneer full wordt losgelaten dat de value van kaanaal+7 en kanaal2+7 terug op hun sliders staan
             _data[kanaal2 + 7] = Convert.ToByte(sl12.Value);
-            dimmer.Content = "dim=" + Math.Round(sl1.Value / 2.55, 0) + "%"; 
+            dimmer.Content = "dim=" + Math.Round(sl1.Value / 2.55, 0) + "%";
             dimmer2.Content = "dim=" + Math.Round(sl12.Value / 2.55, 0) + "%";
         }
         private void split1_Checked(object sender, RoutedEventArgs e)
@@ -238,7 +237,7 @@ namespace eind_opdracht
             if (sl1 != null)
             {
                 var margin = sl1.Margin; //zorgt er voor dat erplaats is voor een tweede slideren toont de tweede slider.
-                var margin1= dimmer.Margin;
+                var margin1 = dimmer.Margin;
                 sl1.Margin = new Thickness(margin.Left - 17.5, margin.Top, margin.Right - 17.5, margin.Bottom);
                 dimmer.Margin = new Thickness(margin1.Left - 17.5, margin1.Top, margin1.Right - 17.5, margin1.Bottom);
                 sl12.Visibility = Visibility.Visible;
@@ -251,11 +250,11 @@ namespace eind_opdracht
             if (sl1 != null)
             {
                 var margin = sl1.Margin;  //zet alles terug naar normaal. En haalt de tweede slider weg 
-                var margin1= dimmer.Margin;
+                var margin1 = dimmer.Margin;
                 sl1.Margin = new Thickness(margin.Left + 17.5, margin.Top, margin.Right + 17.5, margin.Bottom);
                 dimmer.Margin = new Thickness(margin1.Left + 17.5, margin1.Top, margin.Right + 17.5, margin.Bottom);
                 sl12.Visibility = Visibility.Hidden;
-                dimmer2 .Visibility = Visibility.Hidden;
+                dimmer2.Visibility = Visibility.Hidden;
                 _data[kanaal2 + 7] = Convert.ToByte(sl1.Value);
                 sl12.Value = sl1.Value;
             }
@@ -315,7 +314,7 @@ namespace eind_opdracht
             else
             {
                 _data[kanaal2 + 0] = Convert.ToByte(sl2.Value); //zorgt er voor als sl13 niet zichtbaar is dat kanaal2 +0 sl2 volgt
-                
+
             }
         }
         private void sl2_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -331,10 +330,10 @@ namespace eind_opdracht
             else
             {
                 _data[kanaal2 + 0] = Convert.ToByte(sl2.Value); //als SL13 niet visible is dan is kanaal2 +0 =sl2.value
-                sl13.Value=sl2.Value;
+                sl13.Value = sl2.Value;
             }
         }
-        
+
         //TITLT---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private void sl3_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -348,7 +347,7 @@ namespace eind_opdracht
             else
             {
                 _data[kanaal2 + 2] = Convert.ToByte(sl3.Value);
-                sl14.Value=sl3.Value;
+                sl14.Value = sl3.Value;
             }
         }
         private void split3_Checked(object sender, RoutedEventArgs e)
@@ -369,13 +368,13 @@ namespace eind_opdracht
         private void split3_Unchecked(object sender, RoutedEventArgs e)
         {
             sl14.Visibility = Visibility.Hidden;
-            tilt1.Visibility= Visibility.Hidden;
+            tilt1.Visibility = Visibility.Hidden;
 
             if (sl3 != null)
             {
                 var margin = sl3.Margin; //zorgt er voor dat alles terug gaat naar hun origineel
-                var margin1= tilt.Margin;
-                sl3.Margin= new Thickness(margin.Left + 17.5, margin.Top, margin.Right + 17.5, margin.Bottom);
+                var margin1 = tilt.Margin;
+                sl3.Margin = new Thickness(margin.Left + 17.5, margin.Top, margin.Right + 17.5, margin.Bottom);
                 tilt.Margin = new Thickness(margin1.Left + 17.5, margin1.Top, margin1.Right + 17.5, margin1.Bottom);
                 _data[kanaal2 + 2] = Convert.ToByte(sl3.Value);
                 sl14.Value = sl3.Value;
@@ -392,7 +391,7 @@ namespace eind_opdracht
             else
             {
                 _data[kanaal2 + 2] = Convert.ToByte(sl3.Value);
-                sl14.Value=sl3.Value;
+                sl14.Value = sl3.Value;
             }
         }
         //STROBO---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -423,41 +422,7 @@ namespace eind_opdracht
         //KLEUR---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private void sl5_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //zet de value van slider 5 om in bytes voor kanaal +4
         {
-            switch (sl5.Value)
-            {
-                case 0:
-                    kleur.Content = "wit"; //zet de value van sl5 om in leesbare tekst
-                    next.Content = "next: rd";
-                    break;
-                case 10:
-                    kleur.Content = "rood";
-                    next.Content = "next: or";
-                    break;
-                case 20:
-                    kleur.Content = "oranje";
-                    next.Content = "next: lgr";
-                    break;
-                case 30:
-                    kleur.Content = "l groen";
-                    next.Content = "next: dgr";
-                    break;
-                case 40:
-                    kleur.Content = "d groen";
-                    next.Content = "next: bl";
-                    break;
-                case 50:
-                    kleur.Content = "blauw";
-                    next.Content = "next: re";
-                    break;
-                case 60:
-                    kleur.Content = "roze";
-                    next.Content = "next: lbl";
-                    break;
-                case 70:
-                    kleur.Content = "l blauw";
-                    next.Content = "end";
-                    break;
-            }
+            sl5text();
             _data[kanaal + 4] = Convert.ToByte(sl5.Value);
             if (sl11.Visibility == Visibility.Visible)
             {
@@ -468,6 +433,7 @@ namespace eind_opdracht
                 _data[kanaal2 + 4] = Convert.ToByte(sl5.Value);
             }
         }
+
         private void split_Checked(object sender, RoutedEventArgs e) //zorgt er voor dat de slider wordt verplaatst om plaats te maken voor de tweede slider
         {
             if (sl5 != null)
@@ -504,6 +470,7 @@ namespace eind_opdracht
         }
         private void sl11_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //als slider 11 visible is gebruikt kanaal2+4 slider 11 anders gebruikt hij slider 5
         {
+            sl11text();
             if (sl11.Visibility == Visibility.Visible)
             {
                 _data[kanaal2 + 4] = Convert.ToByte(sl11.Value);
@@ -513,6 +480,47 @@ namespace eind_opdracht
                 _data[kanaal2 + 4] = Convert.ToByte(sl5.Value);
                 sl11.Value = sl5.Value;
             }
+        }
+        private void sl5text() 
+        {
+            switch (sl5.Value)
+            {
+                case 0:
+                    kleur.Content = "wit"; //zet de value van sl5 om in leesbare tekst
+                    next.Content = "next: rd";
+                    break;
+                case 10:
+                    kleur.Content = "rood";
+                    next.Content = "next: or";
+                    break;
+                case 20:
+                    kleur.Content = "oranje";
+                    next.Content = "next: lgr";
+                    break;
+                case 30:
+                    kleur.Content = "l groen";
+                    next.Content = "next: dgr";
+                    break;
+                case 40:
+                    kleur.Content = "d groen";
+                    next.Content = "next: bl";
+                    break;
+                case 50:
+                    kleur.Content = "blauw";
+                    next.Content = "next: re";
+                    break;
+                case 60:
+                    kleur.Content = "roze";
+                    next.Content = "next: lbl";
+                    break;
+                case 70:
+                    kleur.Content = "l blauw";
+                    next.Content = "end";
+                    break;
+            }
+        }
+        private void sl11text() 
+        {
             switch (sl11.Value)
             {
                 case 0:
@@ -558,13 +566,15 @@ namespace eind_opdracht
             kleur.Content = "wit";
             kleur1.Content = "wit";
         }
-        
+
         private void btn5_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) //zet alle lampen terug naar de juiste sliders
         {
-           sl5.IsEnabled = true;
-           sl11.IsEnabled = true;
-           _data[kanaal + 4] = Convert.ToByte(sl5.Value);
-           _data[kanaal2 + 4] = Convert.ToByte(sl11.Value);
+            sl5.IsEnabled = true;
+            sl11.IsEnabled = true;
+            _data[kanaal + 4] = Convert.ToByte(sl5.Value);
+            _data[kanaal2 + 4] = Convert.ToByte(sl11.Value);
+            sl5text();
+            sl11text();
         }
 
         private CancellationTokenSource _cts; // Wordt gebruikt om asynchrone operaties te annuleren
@@ -587,7 +597,7 @@ namespace eind_opdracht
                     double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
                     _data[kanaal + 4] = 00; //zet kanaal +4 op wit
                     _data[kanaal2 + 4] = 10; //zet kaanaal2 +4 op rood
-                    wtrd.Background=new SolidColorBrush(Colors.White); // Achtergrondkleur aanpassen
+                    wtrd.Background = new SolidColorBrush(Colors.White); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
                     if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
@@ -603,13 +613,13 @@ namespace eind_opdracht
             wtrd.Background = new SolidColorBrush(Colors.Gray); // Achtergrondkleur aanpassen naar grijs
         }
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        private async void rdor_Click(object sender, RoutedEventArgs e) 
+        private async void rdor_Click(object sender, RoutedEventArgs e)
         {
             sl5.IsEnabled = false; // Schakel sliders en knoppen uit om manuele aanpassingen te voorkomen
             sl11.IsEnabled = false;
             btn5.IsEnabled = false;
             _cts?.Cancel(); // Annuleer een bestaande taak, indien actief
-            if (_isRunning) return; 
+            if (_isRunning) return;
             _isRunning = true;
             _cts = new CancellationTokenSource(); // Nieuw annuleertoken maken
 
@@ -627,7 +637,7 @@ namespace eind_opdracht
 
                     _data[kanaal + 4] = 20; //zet kanaal +4 op oranje
                     _data[kanaal2 + 4] = 10; //zet kanaal2 +4 op rood
-                    rdor.Background= new SolidColorBrush(Colors.Orange); // Achtergrondkleur aanpassen
+                    rdor.Background = new SolidColorBrush(Colors.Orange); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
@@ -653,14 +663,14 @@ namespace eind_opdracht
                     double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
                     _data[kanaal + 4] = 20; //zet kanaal +4 op oranje
                     _data[kanaal2 + 4] = 30; //zet kanaal2 +4 op lichtgroen
-                    orlgr.Background=new SolidColorBrush(Colors.Orange); // Achtergrondkleur aanpassen
+                    orlgr.Background = new SolidColorBrush(Colors.Orange); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
                     if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
                     _data[kanaal + 4] = 30; //zet kanaal +4 op lichtgroen
                     _data[kanaal2 + 4] = 20; //zet kanaal2 +4 op oranje
-                    orlgr.Background=new SolidColorBrush(Colors.LightGreen); // Achtergrondkleur aanpassen
+                    orlgr.Background = new SolidColorBrush(Colors.LightGreen); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
@@ -687,13 +697,13 @@ namespace eind_opdracht
                     _data[kanaal + 4] = 30; //zet kanaal +4 op lichtgroen
                     _data[kanaal2 + 4] = 40; //zet kanaal2 +4 op donkergroen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
-                    lgrdgr.Background=new SolidColorBrush(Colors.LightGreen); // Achtergrondkleur aanpassen
+                    lgrdgr.Background = new SolidColorBrush(Colors.LightGreen); // Achtergrondkleur aanpassen
 
                     if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
                     _data[kanaal + 4] = 40; //zet kanaal +4 op donkergroen
                     _data[kanaal2 + 4] = 30; //zet kanaal2 +4 op lichtgroen
-                    lgrdgr.Background=new SolidColorBrush(Colors.DarkGreen); // Achtergrondkleur aanpassen
+                    lgrdgr.Background = new SolidColorBrush(Colors.DarkGreen); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
@@ -719,7 +729,7 @@ namespace eind_opdracht
                     double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
                     _data[kanaal + 4] = 40; //zet kanaal +4 op donkergroen
                     _data[kanaal2 + 4] = 50; //zet kanaal2 +4 op blauw
-                    dgrbl.Background=new SolidColorBrush(Colors.DarkGreen); // Achtergrondkleur aanpassen
+                    dgrbl.Background = new SolidColorBrush(Colors.DarkGreen); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
                     if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
@@ -752,7 +762,7 @@ namespace eind_opdracht
                     double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
                     _data[kanaal + 4] = 50; //zet kanaal +4 op blauw
                     _data[kanaal2 + 4] = 60; //zet kanaal2 +4 op roze
-                    blre.Background=new SolidColorBrush(Colors.Blue); // Achtergrondkleur aanpassen
+                    blre.Background = new SolidColorBrush(Colors.Blue); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
                     if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
@@ -785,14 +795,14 @@ namespace eind_opdracht
                     double wacht = slidersp.Value; // Wachtperiode in seconden ophalen van de slider
                     _data[kanaal + 4] = 60; //zet kanaal +4 op roze
                     _data[kanaal2 + 4] = 70; //zet kanaal2 +4 op lichtblauw
-                    relbl.Background= new SolidColorBrush(Colors.Pink); // Achtergrondkleur aanpassen
+                    relbl.Background = new SolidColorBrush(Colors.Pink); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
 
                     if (_cts.Token.IsCancellationRequested) break; // Controleer op annulering
 
                     _data[kanaal + 4] = 70; //zet kanaal +4 op lichtblauw
                     _data[kanaal2 + 4] = 60; //zet kanaal2 +4 op roze
-                    relbl.Background=new SolidColorBrush(Colors.LightBlue); // Achtergrondkleur aanpassen
+                    relbl.Background = new SolidColorBrush(Colors.LightBlue); // Achtergrondkleur aanpassen
                     await Task.Delay((int)(wacht * 1000)); //wacht maal 1000
                 }
             }
@@ -820,7 +830,7 @@ namespace eind_opdracht
             switch (sl6.Value) //zet sl6.value om in leesbare tekst.
             {
                 case 0:
-                    gobo.Content = "gobo"; 
+                    gobo.Content = "gobo";
                     break;
                 case 9:
                     gobo.Content = "flower";
@@ -850,12 +860,12 @@ namespace eind_opdracht
         //AUTO TILT---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         private void sl7_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) // zet auto tilt aan
         {
-            _data[kanaal + 10] = Convert.ToByte(sl7.Value); 
+            _data[kanaal + 10] = Convert.ToByte(sl7.Value);
             _data[kanaal2 + 10] = Convert.ToByte(sl7.Value);
 
             if (sl7.Value == 200)
             {
-               
+
                 autotililbl.Content = "auto tilt aan";
                 sl3.IsEnabled = true;
                 if (sl9.Value == 100)
@@ -951,15 +961,15 @@ namespace eind_opdracht
         }
         private void sl8_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) //zet de value van slider 8 om naar bytes voor kanaal9
         {
-            _data[kanaal + 8] = Convert.ToByte( sl8.Value);
+            _data[kanaal + 8] = Convert.ToByte(sl8.Value);
             _data[kanaal2 + 8] = Convert.ToByte(sl8.Value);
             double sliderValue = sl8.Value;
-            double labelValue = (255 - sliderValue) / 2.55; 
-            speedlbl.Content ="speed "+ Math.Round(labelValue, 0)+"%"; //zet sl8.value om in leesbare tekst
+            double labelValue = (255 - sliderValue) / 2.55;
+            speedlbl.Content = "speed " + Math.Round(labelValue, 0) + "%"; //zet sl8.value om in leesbare tekst
         }
         private void btn8_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) //zet speed op max
         {
-            _data[kanaal + 8] = Convert.ToByte(0); 
+            _data[kanaal + 8] = Convert.ToByte(0);
             _data[kanaal2 + 8] = Convert.ToByte(0);
             speedlbl.Content = "speed 100%";
         }
@@ -968,7 +978,7 @@ namespace eind_opdracht
             _data[kanaal + 8] = Convert.ToByte(sl8.Value);
             _data[kanaal2 + 8] = Convert.ToByte(sl8.Value);
             double sliderValue = sl8.Value;
-            double labelValue = (255 - sliderValue) / 2.55; 
+            double labelValue = (255 - sliderValue) / 2.55;
             speedlbl.Content = "speed " + Math.Round(labelValue, 0) + "%";
         }
         private void manuel(object sender, RoutedEventArgs e)//zet alle sliders en buttens aa en schakelt de microfonen uit in de moving heads.
@@ -1014,8 +1024,8 @@ namespace eind_opdracht
             split2.Visibility = Visibility.Visible;
             split3.Visibility = Visibility.Visible;
             kanaalig2.Visibility = Visibility.Visible;
-            var margin= kanaalig.Margin;
-            kanaalig.Margin = new Thickness(margin.Left, margin.Top+26, margin.Right, margin.Bottom );
+            var margin = kanaalig.Margin;
+            kanaalig.Margin = new Thickness(margin.Left, margin.Top + 26, margin.Right, margin.Bottom);
             _data[kanaal2 + 0] = Convert.ToByte(sl2.Value);
             _data[kanaal2 + 2] = Convert.ToByte(sl3.Value);
             _data[kanaal2 + 4] = Convert.ToByte(sl5.Value);
@@ -1059,6 +1069,23 @@ namespace eind_opdracht
             _data[kanaal2 + 8] = Convert.ToByte(0);
             _data[kanaal2 + 9] = Convert.ToByte(0);
             _data[kanaal2 + 10] = Convert.ToByte(0);
+        }
+        private void Clock()
+        {
+            // Maak een DispatcherTimer aan
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1); // Bijwerken elke seconde
+            timer.Tick += Timer_Tick; // Evenement koppelen
+            timer.Start(); // Timer starten
+
+            // Zet de initiële tijd
+            tijd.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            // Update de tijd
+            tijd.Text = DateTime.Now.ToString("HH:mm:ss");
         }
     }
 }
