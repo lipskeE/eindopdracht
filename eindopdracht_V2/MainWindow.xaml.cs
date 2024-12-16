@@ -373,7 +373,7 @@ namespace eind_opdracht
 
             if (sl3 != null)
             {
-                var margin = sl3.Margin; //zorgt er voor dat alles terug gaat naar hun origineel
+                var margin = sl3.Margin; //zorgt er voor dat alles terug gaat naar hun origineel.
                 var margin1 = tilt.Margin;
                 sl3.Margin = new Thickness(margin.Left + 17.5, margin.Top, margin.Right + 17.5, margin.Bottom);
                 tilt.Margin = new Thickness(margin1.Left + 17.5, margin1.Top, margin1.Right + 17.5, margin1.Bottom);
