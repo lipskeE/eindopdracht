@@ -65,29 +65,30 @@ namespace eind_opdracht
         }
         private void Button_Click_2(object sender, RoutedEventArgs e) //Zorgt er voor dat de poort opnieuw kan geladen worden zonder het programma te sluiten
         {
-            Port.Items.Clear();
-            foreach (string s in SerialPort.GetPortNames())
+            Port.Items.Clear(); // Leeg de huidige lijst van COM-poorten in de Port-combobox
+            foreach (string s in SerialPort.GetPortNames()) // Voeg alle beschikbare COM-poorten opnieuw toe aan de combobox
                 Port.Items.Add(s);
 
-            _serialPort = new SerialPort();
-            _serialPort.BaudRate = 250000;
-            _serialPort.StopBits = StopBits.Two;
+            _serialPort = new SerialPort();  // Initialiseer een nieuwe instantie van SerialPort
+            _serialPort.BaudRate = 250000;  // Stel de baudrate in
+            _serialPort.StopBits = StopBits.Two;  // Stel het aantal stopbits in op 2
         }
-        private void _dispatcherTimer_Tick(object? sender, EventArgs e)
+        private void _dispatcherTimer_Tick(object? sender, EventArgs e) // Timer event-handler die periodiek wordt aangeroepen
         {
             SendDmxData(_data, _serialPort);
         }
-        private void SendDmxData(byte[] data, SerialPort serialPort)
-        {
-            data[0] = 0;
+        private void SendDmxData(byte[] data, SerialPort serialPort) // Stuur DMX-gegevens via de seriële poort
+        {                                                            // _data is een byte-array die de DMX-waarden bevat
+            data[0] = 0; // De eerste byte van het DMX-pakket moet altijd 0 zijn (DMX-startcode)
 
-            if (serialPort != null && serialPort.IsOpen)
+            if (serialPort != null && serialPort.IsOpen) // Controleer of de seriële poort geïnitialiseerd is en open staa
             {
-                serialPort.BreakState = true;
-                Thread.Sleep(1);
-                serialPort.BreakState = false;
-                Thread.Sleep(1);
-                serialPort.Write(data, 0, data.Length);
+                serialPort.BreakState = true; // Zet de seriële poort in Break State om een DMX Break te simuleren
+                Thread.Sleep(1); // wacht 1ms
+                serialPort.BreakState = false;  // Zet de Break State uit om de gegevensoverdracht te starten
+                Thread.Sleep(1); // wacht 1ms
+                serialPort.Write(data, 0, data.Length); // Schrijf de DMX-gegevens naar de seriële poort
+
             }
         }
         private void Window_Closed(object sender, EventArgs e)
@@ -100,24 +101,24 @@ namespace eind_opdracht
         {
             if (_serialPort != null)
             {
-                if (_serialPort.IsOpen)
+                if (_serialPort.IsOpen) // Als de poort momenteel open is, sluit deze eerst
                 {
-                    _serialPort.Close();
+                    _serialPort.Close(); // Zorgt ervoor dat de poort wordt gesloten voordat een andere wordt geselecteerd
                 }
 
-                if (Port.SelectedItem != null)
+                if (Port.SelectedItem != null) // Controleer of er een poort is geselecteerd in de combobox
                 {
                     try
                     {
-                        _serialPort.PortName = Port.SelectedItem.ToString();
-                        _serialPort.Open();
+                        _serialPort.PortName = Port.SelectedItem.ToString(); // Stel de naam van de geselecteerde poort in
+                        _serialPort.Open(); //opent de serial poort
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) // Toon een foutmelding als het openen van de poort mislukt
                     {
                         MessageBox.Show($"Fout bij het openen van de poort: {ex.Message}\nSelecteer een andere COM-poort.", "Fout", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                else
+                else // Waarschuw de gebruiker als geen geldige poort is geselecteerd
                 {
                     MessageBox.Show("Selecteer een geldige COM-poort.", "Waarschuwing", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -270,7 +271,7 @@ namespace eind_opdracht
             else
             {
                 _data[kanaal2 + 7] = Convert.ToByte(sl1.Value); //zorgt waneeer split wordt uitgeschakeld dat hij terug de eerst slider volgt en dat hij sl12 in de achtergrond aanpast
-                sl11.Value = sl1.Value;
+                sl12.Value = sl1.Value;
             }
         }
         //PAN---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -321,7 +322,7 @@ namespace eind_opdracht
         {
             _data[kanaal + 0] = Convert.ToByte(sl2.Value);
             _data[kanaal2 + 0] = Convert.ToByte(sl2.Value);
-            pan.Content = "pan " + Math.Round(sl2.Value * 2.1176470, 0) + "°"; //zet de value van sl2 om in leesbare tekst
+            pan.Content = "pan1 " + Math.Round(sl2.Value * 2.1176470, 0) + "°"; //zet de value van sl2 om in leesbare tekst
 
             if (sl13.Visibility == Visibility.Visible)
             {
@@ -339,7 +340,7 @@ namespace eind_opdracht
         {
             _data[kanaal + 2] = Convert.ToByte(sl3.Value);
             _data[kanaal2 + 2] = Convert.ToByte(sl3.Value);
-            tilt.Content = "tilt " + Math.Round(sl3.Value * 0.8039215, 0) + "°"; //zet de value van sl3 om in leesbare tekst
+            tilt.Content = "tilt1 " + Math.Round(sl3.Value * 0.8039215, 0) + "°"; //zet de value van sl3 om in leesbare tekst
             if (sl14.Visibility == Visibility.Visible)
             {
                 _data[kanaal2 + 2] = Convert.ToByte(sl14.Value);
